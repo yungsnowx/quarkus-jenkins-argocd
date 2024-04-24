@@ -1,20 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('Clone') {
             steps {
-                sh 'pwd'
-                sh 'echo passed!!!!'
                 git branch: 'main', url: 'https://github.com/yungsnowx/quarkus-jenkins-argocd'
-                sh 'pwd'
                 sh 'ls'
             }
         }
-        stage('Build and Test') {
+        stage('Build') {
             steps {
                 sh 'ls -ltr'
-                // build the project and create a JAR files
-                sh 'mvn clean package'
+                sh './mvnw clean package'
             }
         }
     }
