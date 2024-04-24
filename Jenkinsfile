@@ -1,9 +1,14 @@
 pipeline {
     agent any
-    tools {
-        docker "docker"
-    }
     stages {
+        stage('Initialize') {
+            steps {
+                script {
+                    def dockerHome = tool 'docker'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                }
+            }
+        }
         stage('Clone') {
             steps {
                 git branch: 'main', url: 'https://github.com/yungsnowx/quarkus-jenkins-argocd'
