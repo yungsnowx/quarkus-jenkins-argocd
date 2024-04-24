@@ -14,4 +14,9 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            deleteDir()
+        }
+    }
 }
