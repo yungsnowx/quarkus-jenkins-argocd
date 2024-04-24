@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh 'ls -ltr'
                 // build the project and create a JAR files
-                sh 'cd quarkus-jenkins-argocd && mvn clean package'
+                sh 'mvn clean package'
             }
         }
     }
