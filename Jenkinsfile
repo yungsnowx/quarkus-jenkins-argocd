@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                echo 'Build Docker Image todo....'
+                docker.build("yungsnow/quarkus-jenkins-argocd:latest")
             }
         }
         stage('Deploy') {
