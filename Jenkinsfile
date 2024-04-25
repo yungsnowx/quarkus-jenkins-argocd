@@ -1,14 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Initialize') {
-            steps {
-                script {
-                    def dockerHome = tool 'docker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
-        }
         stage('Clone') {
             steps {
                 git branch: 'main', url: 'https://github.com/yungsnowx/quarkus-jenkins-argocd'
@@ -17,15 +9,11 @@ pipeline {
         stage('Build') {
             steps {
                 sh './mvnw clean package'
-                sh 'docker build -t yungsnow/quarkus-jenkins-argocd .'
             }
         }
-        stage('Package') {
+        stage('Deploy') {
             steps {
-                withCredentials([string(credentialsId: 'dockerhub_yungsnow_token', variable: 'dockerhub_yungsnow_token')]) {
-                    sh 'docker login -u yungsnow -p ${dockerhub_yungsnow_token}'
-                    sh 'docker push yungsnow/quarkus-jenkins-argocd'
-                }
+                echo 'Deploying....'
             }
         }
     }
