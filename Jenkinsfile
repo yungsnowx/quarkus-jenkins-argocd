@@ -1,14 +1,19 @@
 pipeline {
     agent any
     stages {
-        stage('Clone') {
+        stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/yungsnowx/quarkus-jenkins-argocd'
+                checkout scm
             }
         }
         stage('Build') {
             steps {
-                sh './mvnw clean package'
+                sh './mvnw package -DskipTests=true'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                echo 'Build Docker Image todo....'
             }
         }
         stage('Deploy') {
