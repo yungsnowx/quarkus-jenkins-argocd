@@ -13,7 +13,9 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                docker.build("yungsnow/quarkus-jenkins-argocd:latest")
+                script {
+                    docker.build("yungsnow/quarkus-jenkins-argocd:latest")
+                }
             }
         }
         stage('Deploy') {
