@@ -23,7 +23,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                script {
+                    docker.image("yungsnow/quarkus-jenkins-argocd:latest").push()
+                }
             }
         }
     }
