@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/yungsnowx/quarkus-jenkins-argocd'
+                checkout scm
             }
         }
         stage('Build') {
@@ -24,7 +24,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    docker.image("yungsnow/quarkus-jenkins-argocd:latest").push()
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                            docker.image("yungsnow/quarkus-jenkins-argocd:latest").push()
+                        }
+                    }
                 }
             }
         }
