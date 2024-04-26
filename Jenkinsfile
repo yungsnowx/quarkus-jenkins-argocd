@@ -42,7 +42,7 @@ pipeline {
                 script {
                     def argocdServer = credentials('argocd-server')
 
-                    withCredentials([usernamePassword(credentialsId: "${argocd-login}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'argocd-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                          sh 'argocd login "${argocdServer}" --insecure --username "${USERNAME}" --password "${PASSWORD}"'
                     }
                     sh '''
