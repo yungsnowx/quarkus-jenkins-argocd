@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        maven 'Maven-3.9.6'
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -12,6 +9,11 @@ pipeline {
         stage('Build') {
             steps {
                 sh './mvnw package -DskipTests=true'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './mvnw test'
             }
         }
         stage('Build Docker Image') {
