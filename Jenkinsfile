@@ -43,7 +43,9 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'argocd-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'), string(credentialsId: 'argocd-server', variable: 'SERVER')]) {
                         sh '''
                         argocd login "${SERVER}" --insecure --username "${USERNAME}" --password "${PASSWORD}"
-                        argocd app actions run quarkus-jenkins-argocd-argo-application restart --kind Deployment
+                        # argocd app actions run quarkus-jenkins-argocd-argo-application restart --kind Deployment
+                        argocd app set quarkus-jenkins-argocd-argo-application --image yungsnow/quarkus-jenkins-argocd:nightly
+                        argocd app sync quarkus-jenkins-argocd-argo-application
                         '''
                     }
                 }
