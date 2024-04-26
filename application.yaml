@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-argo-application
+  name: quarkus-jenkins-argocd-argo-application
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/yungsnowx/quarkus-jenkins-argocd.git
-    targetRevision: HEAD
-    path: dev
+    targetRevision: nightly
+    path: k8s
   destination:
     server: https://kubernetes.default.svc
-    namespace: nginx
+    namespace: quarkus-jenkins-argocd
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
