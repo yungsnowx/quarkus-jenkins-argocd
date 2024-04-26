@@ -41,11 +41,11 @@ pipeline {
             steps {
                 script {
                     def argocdServer = credentials('argocd-server')
-                    def username = credentials('argocd-login').username
-                    def password = credentials('argocd-login').password
 
+                    withCredentials([usernamePassword(credentialsId: "${argocd-login}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                         sh 'argocd login "${argocdServer}" --insecure --username "${USERNAME}" --password "${PASSWORD}"'
+                    }
                     sh '''
-                    argocd login "${argocdServer}" --insecure --username "${username}" --password "${password}"
                     argocd app actions run quarkus-jenkins-argocd-argo-application restart --kind Deployment |& tee response.txt
                     cat response.txt
                     # if response.txt have content, exit with error, empty response means success
