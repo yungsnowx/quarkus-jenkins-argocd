@@ -40,7 +40,6 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    def argocdServer = credentials('argocd-server')
                     withCredentials([usernamePassword(credentialsId: 'argocd-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'), string(credentialsId: 'argocd-server', variable: 'SERVER')]) {
                          sh 'argocd login "${SERVER}" --insecure --username "${USERNAME}" --password "${PASSWORD}"'
                     }
