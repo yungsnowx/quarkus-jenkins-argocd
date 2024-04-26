@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus-jenkins-argocd
+  labels:
+    app: quarkus-jenkins-argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quarkus-jenkins-argocd
+  template:
+    metadata:
+      name: quarkus-jenkins-argocd
+      labels:
+        app: quarkus-jenkins-argocd
+    spec:
+      containers:
+        - name: quarkus-jenkins-argocd
+          image: yungsnow/quarkus-jenkins-argocd:nightly
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
